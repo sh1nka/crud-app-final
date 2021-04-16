@@ -2,12 +2,22 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
+import Reactotron from 'reactotron-react-js'
+
 // Components Imports
 import Login from './components/Login'
 import Register from './components/Register'
 import Dashboard from './components/Dashboard'
 
 function App() {
+
+  Reactotron
+  .configure()
+  .connect()
+
+
+  // Axios
+
 
   // Getting State of Auth
 

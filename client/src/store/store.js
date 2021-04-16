@@ -1,26 +1,19 @@
-import { createStore } from 'redux';
-import rootReducer from '../reducers/index';
-//import createSagaMiddleware from 'redux-saga'
+import { createStore, applyMiddleware, compose } from 'redux';
+import rootReducer from '../reducers/rootReducer';
+import rootSaga from '../sagas/saga';
 
-const counterReducer = (state = { counter: 0}, action) => 
-{
-    if(action.type === 'increment')
-    {
-        return{
-            counter: state.counter + 1
-        }
-    }
+import createSagaMiddleware from 'redux-saga'
 
-    if(action.type === 'decrement')
-    {
-        return{
-            counter: state.counter - 1
-        }
-    }
+const sagaMiddleware = createSagaMiddleware();
 
-    return state;
-};
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMiddleware)));
+//const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)));
 
-const store = createStore(counterReducer);
+//const store = compose(applyMiddleware(sagaMiddleware),)(createStore)(rootReducer)
+//const store = createStore(rootReducer, applyMiddleware(sagaMiddleware), window.devToolsExtension && window.devToolsExtension(), )(createStore)(rootReducer);
+
+sagaMiddleware.run(rootSaga);
+
 
 export default store;
