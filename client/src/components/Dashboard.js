@@ -5,9 +5,9 @@ import { getUsers } from '../actions/usersActions'
 
 //Material UI
 import Button from '@material-ui/core/Button';
-import { Grid, Paper, Avatar, TextField } from '@material-ui/core';
-import LockTwoToneIcon from '@material-ui/icons/LockTwoTone';
-import MaterialTable from 'material-table';
+import { Grid, Paper, Avatar, TextField, Table } from '@material-ui/core';
+
+const axios = require('axios');
 
 const Dashboard = ({ setAuth }) =>
 {
@@ -18,13 +18,35 @@ const Dashboard = ({ setAuth }) =>
 
     //alert(JSON.stringify(users))
 
+    const [inputs, setInputs] = useState({
+        id: ''
+    });
+
+    const { id } = inputs;
+
+    const onChange = (e) => {
+        setInputs({...inputs, [e.target.name] : e.target.value})
+    }
+
+    const onBtnClick = async(e) =>{
+        e.preventDefault()
+        try 
+        {
+            axios.delete(`http://localhost:7000/dashboard/remove/${id}`);
+        } 
+        catch (error) 
+        {
+            console.error(error.message);
+        }
+    }
+
     useEffect(() =>
     {
         dispatch(getUsers());
     }, [dispatch]);
 
-    /*
-    const [name, setName] = useState('');
+    
+    /*const [name, setName] = useState('');
 
     async function getName()
     {
@@ -45,31 +67,73 @@ const Dashboard = ({ setAuth }) =>
         }
     }
 
-    // Button log out event
+    useEffect(() => {
+        getName();
+    }, []); */
+
+    // Log out evento button
     const logout = (e) =>{
         e.preventDefault();
         localStorage.removeItem('token');
         setAuth(false);
     }
 
-    useEffect(() => {
-        getName();
-    }, []); */
 
+    // paperStyle and buttonStyle
     const paperStyle = {
         padding: 40,
         paddingTop: 20,
         height: 'auto',
         width: 500,
         margin: 'auto',
-        marginTop: '20vh'
+        marginTop: '20vh',
     }
 
     const buttonStyle = {
-        marginTop: '2vh'
+        marginRight: '5%',
+    }
+
+    const textfieldStyle = {
+        width: 'auto'
     }
 
     /*
+    <Button href="/" style={buttonStyle} variant='contained' color='primary'>Create</Button>
+                <Button type='submit' style={buttonStyle} variant='contained' color='primary'>Update</Button>*/
+
+    return(
+        <Grid>
+            <Paper elevation={5} style={paperStyle}>
+            <form onSubmit={onBtnClick}>
+                <Paper elevation={0} style={{padding: 4, width: 'auto'}}>
+                    <TextField type="text" name='id' value={id} onChange={e => onChange(e)} placeholder='ID'/>
+                    <TextField  type="text" name='name' placeholder='Username'/>
+                    <TextField type="text" name='name'  placeholder='Password'/>
+                </Paper>
+                <Paper elevation={0}>
+                <Button type='submit' style={buttonStyle} variant='contained' color='secondary' onClick={logout}>Log out</Button>
+                <Button type='submit' style={buttonStyle} variant='contained' color='primary'>Remove</Button>
+                </Paper>
+            </form>
+                {users.map((data) => (
+                    <div className='tabela'>
+                        <tr>
+                            <td>{data.user_name}</td>
+                            <td>{data.user_id}</td>
+                        </tr>
+                    </div>
+                ))}
+                {users.length === 0 && !loading && <p>Vazio ou com erro</p>}
+                {error && !loading && <p>{error}</p>}
+                
+            </Paper>
+        </Grid>
+    )
+}
+
+export default Dashboard;
+
+/*
     const fetchUsers = async() =>{
         const response = await api.get('/users');
         return response.data;
@@ -94,25 +158,7 @@ const Dashboard = ({ setAuth }) =>
     // users.length > 0 && 
     // {users.loading && <p>Loading...</p>}
 
-    return (
-      
-        <Grid>
-            <Paper elevation={5} style={paperStyle}>
-                {users.map((data) => (
-                    <div className='tabela'>
-                        <tr>
-                            <td>{data.user_name}</td>
-                        </tr>
-                    </div>
-                ))}
-                {users.length === 0 && !loading && <p>Fudeu irmao</p>}
-                {error && !loading && <p>{error}</p>}
-            </Paper>
-        </Grid>
-
-
-
-        /*
+    /*
                 <Grid>
                 <h1>Bem vindo ao Dashboard, {name}</h1>
                     <Paper elevation={5} style={paperStyle}>
@@ -125,7 +171,3 @@ const Dashboard = ({ setAuth }) =>
                             <Button type='submit' style={buttonStyle} variant='contained' color='primary'>Login</Button>
                     </Paper>
                 </Grid>*/
-    )
-}
-
-export default Dashboard;

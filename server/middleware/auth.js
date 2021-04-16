@@ -14,7 +14,6 @@ module.exports = async (req, res, next) =>{
             console.log(err, decoded);
         });*/
 
-        
         req.user = payload.user;
         
         next();

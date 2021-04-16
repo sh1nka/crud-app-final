@@ -7,8 +7,6 @@ import Button from '@material-ui/core/Button';
 import { Grid, Paper, Avatar, TextField} from '@material-ui/core';
 import LockTwoToneIcon from '@material-ui/icons/LockTwoTone';
 
-
-
 const Login = ({ setAuth }) =>
 {
     const [inputs, setInputs] = useState({
@@ -27,7 +25,7 @@ const Login = ({ setAuth }) =>
         try {
 
             const body = {name, password};
-
+            
             const response = await fetch('http://localhost:7000/auth/login', {
                 method: "POST",
                 headers: {'Content-Type' : 'application/json'},

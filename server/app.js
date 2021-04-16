@@ -3,6 +3,7 @@ const cors = require('cors');
 
 ////// Database Configuation
 const database = require ('./config/database');
+const { sequelize } = require('./models/User');
 
 ////// Database Test
 database.authenticate()
@@ -26,6 +27,9 @@ app.use('/auth', require('./routes/jwtAuth'));
 // Dashboard
 app.use('/dashboard', require('./routes/dashboard'));
 
+// CRUD
+require('./routes/usersRoute')(app);
+
 // Root Route
 app.route('/')
 
@@ -35,4 +39,10 @@ app.route('/')
 
 app.listen(7000, () => {
     console.log('Server running - Port 7000')
+
+    sequelize.sync({ force: false }).then(() => {
+        console.log('Sync')
+    }).catch(err => {
+        console.log('Sync err', err)
+    })
 });
