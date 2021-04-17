@@ -23,8 +23,25 @@ router.get('/', auth, async (req, res) => {
     }
 });
 
+/*router.post('/', (req, res) => {
+    User.create({
+        user_name: req.body.username,
+        user_password: req.body.password
+    }).then(post => {
+        res.json(post);
+    });
+});*/
+
+// Read
+router.get('/read/:id', (req, res) => {
+    User.findByPk(req.params.id)
+    .then(post => {res.json(post)})
+});
+
+// Update
+
 router.patch('/update/:id', (req, res) => {
-     User.update({
+      User.update({
         user_name: req.body.name,
         user_password: req.body.password,
     },
@@ -35,6 +52,8 @@ router.patch('/update/:id', (req, res) => {
         res.json(result);
     });
 });
+
+// Delete
 
 router.delete('/remove/:id', (req, res) =>
 {
