@@ -32,6 +32,26 @@ router.get('/', auth, async (req, res) => {
     });
 });*/
 
+// Read All
+
+router.get('/read/users', async(req, res) => {
+    try {
+        const users = await User.findAll();
+        if (users === null) {
+            res.json('User not found');
+            console.log('Not found!');
+        } 
+        else {
+            res.json(users);
+        }
+    }
+
+    catch (error) {
+        console.error(error.message)
+        res.status(500).json('Server error');
+    }
+});
+
 // Read
 router.get('/read/:id', (req, res) => {
     User.findByPk(req.params.id)

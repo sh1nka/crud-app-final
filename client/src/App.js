@@ -2,19 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
-import Reactotron from 'reactotron-react-js'
-
 // Components Imports
 import Login from './components/Login'
 import Register from './components/Register'
 import Dashboard from './components/Dashboard'
+import NDashboard from './components/NDashboard';
 
 function App() {
-
-  Reactotron
-  .configure()
-  .connect()
-
 
   // Axios
 
@@ -58,9 +52,10 @@ return (
       <BrowserRouter>
         <div className='container'>
           <Switch>
-            <Route exact path='/login' render={props => !isAuth ? (<Login {...props} setAuth = { setAuth }/>) : (<Redirect to='/dashboard'/>)} />
+            <Route exact path='/login' render={props => !isAuth ? (<Login {...props} setAuth = { setAuth }/>) : (<Redirect to='/ndashboard'/>)} />
             <Route exact path='/register' render={props => !isAuth ? (<Register {...props} setAuth = { setAuth }/>) : (<Redirect to='/login'/>)} />
-            <Route exact path='/dashboard' render={props => isAuth ? (<Dashboard {...props} setAuth = { setAuth }/>) : (<Redirect to='/login'/>)} />
+            <Route exact path='/ndashboard' render={props => isAuth ? (<NDashboard {...props} setAuth = { setAuth }/>) : (<Redirect to='/login'/>)} />
+            
           </Switch>
         </div>
       </BrowserRouter>
