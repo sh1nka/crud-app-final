@@ -5,6 +5,8 @@ const axios = require('axios');
 
 const apiUrl = 'http://localhost:7000/dashboard/users';
 
+const api = 'http://localhost:7000/dashboard';
+
 function getApi()
 {
     console.log('getApi')
@@ -25,6 +27,33 @@ function getApi()
     .then(res => console.log(res.data))
     .catch((err) => {throw err})*/
 }
+
+/*
+function removeApi()
+{
+    try
+    {
+        axios.delete(`${api}/remove/${id}`)
+    }
+    catch(err)
+    {
+        console.error(error.message);
+    }
+}
+
+function* removeUsers(action)
+{
+    try
+    {
+        const users = yield call(getApi);
+        yield put({type: 'DELETE_USER_SUCCESS', users: users});
+        console.log('getUsers Action', action)
+    }
+    catch(err)
+    {
+        yield put({type: 'DELETE_USER_FAILED', message: err.message});
+    }
+}*/
 
 function* getUsers(action)
 {

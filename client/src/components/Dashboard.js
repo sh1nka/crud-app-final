@@ -28,11 +28,29 @@ const Dashboard = ({ setAuth }) =>
         setInputs({...inputs, [e.target.name] : e.target.value})
     }
 
-    const onBtnClick = async(e) =>{
+    const onBtnClickDelete = async(e) =>{
         e.preventDefault()
         try 
         {
             axios.delete(`http://localhost:7000/dashboard/remove/${id}`);
+        } 
+        catch (error) 
+        {
+            console.error(error.message);
+        }
+    }
+
+    const onBtnClickSearch = async(e) =>{
+        e.preventDefault()
+        try 
+        {
+            axios.get(`http://localhost:7000/dashboard/read/${id}`);
+            alert(id);
+            {users.map((data) => (
+                <tr>
+                    <td>{data.user_id === id ? data.user_name : 'User not found'}</td>
+                </tr>
+            ))};
         } 
         catch (error) 
         {
@@ -90,7 +108,7 @@ const Dashboard = ({ setAuth }) =>
     }
 
     const buttonStyle = {
-        marginRight: '5%',
+        marginRight: '',
     }
 
     const textfieldStyle = {
@@ -104,15 +122,19 @@ const Dashboard = ({ setAuth }) =>
     return(
         <Grid>
             <Paper elevation={5} style={paperStyle}>
-            <form onSubmit={onBtnClick}>
+            <form onSubmit={onBtnClickDelete}>
                 <Paper elevation={0} style={{padding: 4, width: 'auto'}}>
                     <TextField type="text" name='id' value={id} onChange={e => onChange(e)} placeholder='ID'/>
                     <TextField  type="text" name='name' placeholder='Username'/>
                     <TextField type="text" name='name'  placeholder='Password'/>
                 </Paper>
+
                 <Paper elevation={0}>
+                <Button type='submit' style={buttonStyle} variant='contained' color='primary'>Create</Button>
+                <Button type='submit' style={buttonStyle} variant='contained' color='primary' onClick={onBtnClickSearch}>Search ID</Button>
+                <Button type='submit' style={buttonStyle} variant='contained' color='primary'>Update</Button>
+                <Button type='submit' style={buttonStyle} variant='contained' color='primary'>Remove ID</Button>
                 <Button type='submit' style={buttonStyle} variant='contained' color='secondary' onClick={logout}>Log out</Button>
-                <Button type='submit' style={buttonStyle} variant='contained' color='primary'>Remove</Button>
                 </Paper>
             </form>
                 {users.map((data) => (

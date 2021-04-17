@@ -28,6 +28,24 @@ export default function users(state = initialState, action)
                 loading: false,
                 error: action.message,
             }
+            case type.DELETE_USER_REQUESTED:
+            return{
+                ...state,
+                loading: true,
+                error: action.message,
+            }
+            case type.DELETE_USER_SUCCESS:
+            return{
+                ...state,
+                loading: false,
+                error: action.users,
+            }
+            case type.DELETE_USER_FAILED:
+            return{
+                ...state,
+                loading: false,
+                error: action.message,
+            }
         default:
             return state;
     }

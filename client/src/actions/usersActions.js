@@ -11,22 +11,29 @@ export function getUsers(users){
 
 export function addUser(id){
     return{
-        type: 'ADD_USERS_REQUESTED',
+        type: type.CREATE_USER_REQUESTED,
+        payload: id,
+    }
+}
+
+export function findUser(id){
+    return{
+        type: type.FIND_USER_REQUESTED,
         payload: id,
     }
 }
 
 export function updateUser(data){
     return{
-        type: 'UPDATE_USERS_REQUESTED',
+        type: type.UPDATE_USER_REQUESTED,
         payload: data,
     }
 }
 
-export function removeUser(data){
+export function deleteUser(id){
     return{
-        type: 'REMOVE_USERS_REQUESTED',
-        payload: data,
+        type: type.DELETE_USER_REQUESTED,
+        payload: id,
     }
 }
 
