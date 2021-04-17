@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { getUsers, setUsers } from '../models/actions';
+import { getUserID, getUsers, updateUser, setUsers } from '../models/actions';
 
 import { Grid, Paper, TextField, Button } from '@material-ui/core';
 
@@ -8,7 +8,6 @@ const axios = require('axios');
 
 const NDashboard = ({setAuth}) =>
 {
-
     const users = useSelector((state) => state.users)
     const dispatch = useDispatch();
 
@@ -27,6 +26,17 @@ const NDashboard = ({setAuth}) =>
     const onBtnUpdate = () =>
     {
         alert('Updated')
+        dispatch(updateUser(users));
+        /*e.preventDefault()
+        try
+        {
+            axios.patch(`http://localhost:7000/dashboard/update/${id}`)
+            {
+                method: 'patch',
+            }
+
+        }
+        alert('Updated')*/
         //dispatch()
     }
 
@@ -34,21 +44,14 @@ const NDashboard = ({setAuth}) =>
     const onBtnSearchAll = () =>
     {
         alert('Search All')
-        dispatch(getUsers());
+        dispatch(getUsers(users));
     }
 
     // Dispatch on Button Search ID
-    const onBtnSearchID = async (e) =>
+    const onBtnSearchID = () =>
     {
-        e.preventDefault()
-        try 
-        {
-            axios.get(`http://localhost:7000/dashboard/read/${id}`);
-        }
-        catch (error) 
-        {
-            console.error(error.message);
-        }
+        alert('Search ID')
+        dispatch(getUserID(users));
     }
 
     // On Button Delete
@@ -58,6 +61,7 @@ const NDashboard = ({setAuth}) =>
         try 
         {
             axios.delete(`http://localhost:7000/dashboard/remove/${id}`);
+            alert('User deleted')
         }
         catch (error) 
         {
@@ -97,8 +101,6 @@ const NDashboard = ({setAuth}) =>
         marginRight: '',
     }
 
-    
-
     return(
         <>
         <Grid>
@@ -113,7 +115,7 @@ const NDashboard = ({setAuth}) =>
             <Button type='submit' style={buttonStyle} variant='contained' color='primary' onClick={onBtnCreate}>Create</Button>
             <Button type='submit' style={buttonStyle} variant='contained' color='primary' onClick={onBtnSearchAll}>Search All</Button>
             <Button type='submit' style={buttonStyle} variant='contained' color='primary' onClick={onBtnSearchID}>Search ID</Button>
-            <Button type='submit' style={buttonStyle} variant='contained' color='primary' >Update</Button>
+            <Button type='submit' style={buttonStyle} variant='contained' color='primary' onClick={onBtnUpdate}>Update</Button>
             <Button type='submit' style={buttonStyle} variant='contained' color='primary' onClick={onBtnClickDelete}>Remove ID</Button>
             <Button type='submit' style={buttonStyle} variant='contained' color='secondary' onClick={logout}>Log out</Button>
             </Paper>
@@ -122,8 +124,8 @@ const NDashboard = ({setAuth}) =>
       {users.map((data) => (
                     <div className='tabela'>
                         <tr>
-                            <td>{data.user_id}</td>
-                            <td>{data.user_name}</td>
+                            <td>ID: {data.user_id}</td>
+                            <td>Username: {data.user_name}</td>
                         </tr>
                         <hr/>
                     </div>

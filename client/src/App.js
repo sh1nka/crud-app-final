@@ -5,7 +5,6 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 // Components Imports
 import Login from './components/Login'
 import Register from './components/Register'
-import Dashboard from './components/Dashboard'
 import NDashboard from './components/NDashboard';
 
 function App() {
