@@ -27,17 +27,6 @@ const NDashboard = ({setAuth}) =>
     {
         alert('Updated')
         dispatch(updateUser(users));
-        /*e.preventDefault()
-        try
-        {
-            axios.patch(`http://localhost:7000/dashboard/update/${id}`)
-            {
-                method: 'patch',
-            }
-
-        }
-        alert('Updated')*/
-        //dispatch()
     }
 
     // Dispatch on Button Search All
@@ -78,10 +67,12 @@ const NDashboard = ({setAuth}) =>
 
     // Input change in textfields
     const [inputs, setInputs] = useState({
-        id: ''
+        id: '',
+        name: '',
+        password: '',
     });
 
-    const { id } = inputs;
+    const { id, name, password } = inputs;
 
     const onChange = (e) =>
     {
@@ -101,23 +92,38 @@ const NDashboard = ({setAuth}) =>
         marginRight: '',
     }
 
+    const onSubmitForm = async(e) =>{
+        e.preventDefault()
+        try {
+            const body = {name, password};
+
+            return body;
+        } 
+        catch (error) {
+            console.error(error.message);
+        }
+    }
     return(
         <>
         <Grid>
         <Paper elevation={5} style={paperStyle}>
             <Paper elevation={0} style={{padding: 4, width: 'auto'}}>
+            <form onSubmit={onSubmitForm}>
                 <TextField type="text" name='id' value={id} onChange={e => onChange(e)} placeholder='ID'/>
-                <TextField  type="text" name='name' placeholder='Username'/>
-                <TextField type="text" name='name'  placeholder='Password'/>
-            </Paper>
+                <TextField type="text" name='name' value={name} onChange={e => onChange(e)} placeholder='Username'/>
+                <TextField type="text" name='password' value={password} onChange={e => onChange(e)} placeholder='Password'/>
+            
+            
 
-            <Paper elevation={0}>
+            
             <Button type='submit' style={buttonStyle} variant='contained' color='primary' onClick={onBtnCreate}>Create</Button>
             <Button type='submit' style={buttonStyle} variant='contained' color='primary' onClick={onBtnSearchAll}>Search All</Button>
             <Button type='submit' style={buttonStyle} variant='contained' color='primary' onClick={onBtnSearchID}>Search ID</Button>
-            <Button type='submit' style={buttonStyle} variant='contained' color='primary' onClick={onBtnUpdate}>Update</Button>
+            <Button type='submit' valuestyle={buttonStyle} variant='contained' color='primary' onClick={onBtnUpdate}>Update</Button>
             <Button type='submit' style={buttonStyle} variant='contained' color='primary' onClick={onBtnClickDelete}>Remove ID</Button>
             <Button type='submit' style={buttonStyle} variant='contained' color='secondary' onClick={logout}>Log out</Button>
+            </form>
+            
             </Paper>
 
  
@@ -137,6 +143,12 @@ const NDashboard = ({setAuth}) =>
 }
 
 export default NDashboard
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*{users.map((data) => {
           return (

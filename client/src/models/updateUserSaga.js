@@ -7,5 +7,5 @@ export function* updateUserWatcher(){
 }
 
 function* updateUserFlow(action){
-    yield call(updateUser, action.payload)
-}
+        yield call(updateUser, action);
+};
