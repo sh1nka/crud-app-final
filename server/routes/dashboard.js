@@ -23,14 +23,14 @@ router.get('/', auth, async (req, res) => {
     }
 });
 
-/*router.post('/', (req, res) => {
+router.post('/create/users', (req, res) => {
     User.create({
-        user_name: req.body.username,
+        user_name: req.body.name,
         user_password: req.body.password
     }).then(post => {
         res.json(post);
     });
-});*/
+});
 
 // Read All
 
