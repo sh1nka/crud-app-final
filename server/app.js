@@ -28,9 +28,6 @@ app.use('/auth', require('./routes/jwtAuth'));
 // Dashboard
 app.use('/dashboard', require('./routes/dashboard'));
 
-// CRUD
-require('./routes/usersRoute')(app);
-
 // Root Route
 app.route('/')
 

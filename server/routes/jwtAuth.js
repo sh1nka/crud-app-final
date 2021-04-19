@@ -40,17 +40,6 @@ router.post('/login', async(req, res) =>{
     }
 });
 
-// Showing tables and message on console - general test
-/*router.get('/', (req, res) => 
-User.findAll()
-.then(users => {
-    console.log(users);
-    res.sendStatus(200);
-})
-.catch(err => console.log(err)));*/
-
-// Register
-
 router.post('/register', async(req, res) => {
     try {
         // Req Body Data
